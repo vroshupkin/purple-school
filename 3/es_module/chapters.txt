@@ -1,0 +1,12 @@
+
+ES модули
+    :Все файлы с расширением mjs используют ES модули
+    
+
+Примеры:
+    #1.1 default + deconstruction import
+    #1.2 Динамический import с помощью await
+
+
+
+node ./app.mjs
