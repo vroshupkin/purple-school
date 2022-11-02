@@ -1,80 +1,78 @@
 const root = document.getElementById('root')
 
-let dataModel = [
-    '1',
-    '2',
-    '3'
-]
-
-let container = null
-/**
- * В начале удаляет старый элемент и создает и рендерит новый
- */
-function render(){
-    if(container != null){
-        container.remove()
-    }
-    container = document.createElement('div')
-
-    for (let i = 0; i < dataModel.length; i++) {
-        const text_div = document.createElement('div')
-        text_div.innerHTML =  dataModel[i]
-    
-        const delete_button = document.createElement('button')
-        delete_button.innerText = 'x'
-
-
-        delete_button.onclick = () => {
-            dataModel.splice(i, 1)
-            render()
-        }
-        
-        const wrapper_div = document.createElement('div')
-        wrapper_div.appendChild(text_div)
-        wrapper_div.appendChild(delete_button)
-        wrapper_div.style.width = '150px'
-        wrapper_div.style.display = 'flex'
-        wrapper_div.style.justifyContent = 'space-between'
-        
-        container.appendChild(wrapper_div)
-    }
-
-
-    container.appendChild(addElement())
-    root.appendChild(container)
+const todoData = {
+    text: [
+        '1', '2', '3'
+    ],
+    input: '',
+    container: null
 }
 
+const todoElementGenerator = (text, i) => {
+    let html = `
+        <div style="display: flex; width: 150px; justify-content: space-between">
+            <p1>${text}</p1>
+            <button>x</button>
+        </div>
+    `.trim()
 
-let addInputData = ''
-function addElement(){
-    const wrapper_div = document.createElement('div')
-    wrapper_div.style.width = '150px'
-    wrapper_div.style.display = 'flex'
-
+    const el = document.createElement('div')
+    el.innerHTML = html
     
-    const input = document.createElement('input')
-    input.onchange = (e) => {
-        addInputData = e.target.value
-    }
-
-    const addButton = document.createElement('button')
-    addButton.onclick = () => {
-        if(typeof addInputData != 'string')
-            return
-        if(addInputData.length === 0)
-            return
-        
-        dataModel.push(addInputData)
-        addInputData = ''
+    const div = el.children[0]
+    const button = div.children[1]
+    button.onclick = () => {
+        todoData.text.splice(i, 1)
         render()
     }
 
-    addButton.innerHTML = '+'
+    return el.children[0]
+}
 
-    wrapper_div.appendChild(input)
-    wrapper_div.appendChild(addButton)
 
-    return wrapper_div
+function newToDoGenerator(){
+    const html = `
+        <div style={width: 150px; display: flex}>
+            <input></input>
+            <button>+</button>
+        </div>
+    `.trim()
+
+    const wrapper = document.createElement('div')
+    wrapper.innerHTML = html
+
+    const div = wrapper.children[0]
+    const input = div.children[0]
+    const button = div.children[1]
+    input.onchange = (e) => {
+        todoData.input = e.target.value
+    }
+    button.onclick = () => {
+        if (todoData.input.length === 0) return
+
+        todoData.text.push(todoData.input)
+        todoData.input = ''
+        render()
+    }
+
+    return div
+}
+
+
+function render(){
+    if(todoData.container != null){
+        todoData.container.remove()
+    }
+    todoData.container = document.createElement('div')
+
+    todoData.text.forEach((str, i) => {
+        const todo = todoElementGenerator(str, i)
+        todoData.container.appendChild(todo)
+    }) 
+
+    todoData.container.appendChild(newToDoGenerator())
+    root.appendChild(todoData.container)
 }
 
 render()
+
