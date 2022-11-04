@@ -2,10 +2,12 @@
   "name": "nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "weather.js",
+  "bin": {
+    "weather": "./weather.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-    
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/vroshupkin/purple-school/issues"
   },
-  "homepage": "https://github.com/vroshupkin/purple-school#readme"
+  "homepage": "https://github.com/vroshupkin/purple-school#readme",
+  "dependencies": {
+    "axios": "^1.1.3"
+  }
 }
