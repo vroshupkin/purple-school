@@ -11,6 +11,13 @@ import { basename, dirname, join, extname, relative, resolve, sep } from 'path'
 //  console.log(resolve('..'))                         // Путь при действии от 
 //  console.log(sep)                                   // Разделить путей в файлых в ОС. Windows = \, Linux = /
 
+const TOKEN_DICTIONARY = {
+    token: 'token',
+    city: 'city'
+}
+
+
+
 const filePath = join(homedir(), '../weather-data.json') 
 /**
  * Сохранение ключа
@@ -52,4 +59,6 @@ const isExist = async (path) => {
     
 }
 
-export { saveKeyValue, getKeyValue }
+
+
+export { saveKeyValue, getKeyValue, TOKEN_DICTIONARY }
