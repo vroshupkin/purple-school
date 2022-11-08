@@ -2,12 +2,17 @@ import chalk from "chalk";
 
 const BLACK_GREEN = [1, 87, 12]
 
-const printError = (error) => {
-    console.log(chalk.bgRed(' ERROR ') + ' ' + error)
+const printError = (error_message) => {
+    console.log(chalk.bgRed(' ERROR ') + ' ' + error_message)
 }
 
 const printSuccess = (message) => {
     console.log(chalk.bgRgb(...BLACK_GREEN)(' SUCCESS ') + ' ' + message)
+}
+
+const printStackError = (error) => {
+    if(error.stack)
+        console.log(error.stack)
 }
 
 const printHelp = () => {
@@ -26,4 +31,4 @@ const printHelp = () => {
     
 }
 
-export { printError, printSuccess, printHelp }
+export { printError, printSuccess, printHelp, printStackError }

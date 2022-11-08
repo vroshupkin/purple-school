@@ -1,3 +1,4 @@
 /.git
 /node_modules
 /tokens.json
+/user_data.json

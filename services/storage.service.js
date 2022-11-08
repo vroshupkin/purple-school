@@ -1,6 +1,8 @@
 import { promises } from 'fs'
 import { homedir } from 'os'
 import { basename, dirname, join, extname, relative, resolve, sep } from 'path'
+import { PATH_USER_DATA } from '../weather.js'
+import { printError } from './log.service.js'
 
 //  let pathTest = join(homedir(), '../weather-data.json') 
 //  console.log(pathTest)                              
@@ -17,46 +19,68 @@ const TOKEN_DICTIONARY = {
 }
 
 
-const PATH_USER_DATA = join('./user_data.json') 
 
-const filePath = join(homedir(), '../weather-data.json') 
+
+// const PATH_USER_DATA = join(homedir(), '../weather-data.json') 
+
 /**
  * Сохранение ключа
  */
 const saveKeyValue = async (key, value) => {
     let data = {}
 
-    if(await isExist(filePath)){
-        const file  = await promises.readFile(filePath)
-        data = JSON.parse(file)
+    console.log(await isExist('./asds'))
+    const fileIsExist = await isExist(PATH_USER_DATA)
+    if(!fileIsExist){
+        try{
+            new Function("throw new Error()")();
+        }
+        catch(e){
+            printError(`Файлf ${PATH_USER_DATA} не существует`)
+            console.log(e.stack);
+        }
+        return
     }
 
+    const file  = await promises.readFile(PATH_USER_DATA)
+    data = JSON.parse(file)
     data[key] = value
 
-    await promises.writeFile(filePath, JSON.stringify(data))
+    await promises.writeFile(PATH_USER_DATA, JSON.stringify(data))
 
 }
 
+/**
+ * Забирает ключ с файла
+ * @param {string} key 
+ * @returns 
+ */
 const getKeyValue = async (key) => {
-    if(await isExist(filePath)){
-        const file = await promises.readFile(filePath)
-        const data = JSON.parse(file)
-        return data[key]
-    }
-    return undefined
+    const fileIsExist = await isExist(PATH_USER_DATA)
+    if(!fileIsExist)
+        return undefined
+
+    const file = await promises.readFile(PATH_USER_DATA)
+    const data = JSON.parse(file)
+    return data[key]
+
+    
     
 }
 
-
+/**
+ * Проверяет есть ли файл по заданному пути
+ * @param {} path 
+ * @returns 
+ */
 const isExist = async (path) => {
     try{
-        await promises.stat()
+        await promises.stat(path)
         return true
     }
     catch(e){
         return false
     }
-
     
 }
 
