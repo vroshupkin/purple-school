@@ -41,16 +41,17 @@ const getCity = async (city_name) => {
 }
 
 const readToken = async () => {
-    let data = await promises.readFile(filePath)
+    let data = await promises.readFile('./tokens.json')
     data = JSON.parse(data)
 
     return data.token
 }
 
 const getWeather = async (city) => {
-    const API_token = await readToken()
+    // const API_token = await readToken()
+    const API_token = process.env.TOKEN
     
-    const { data } = await axios('https://api.openweathermap.org/data/2.5/weather?', {
+    const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather?', {
         params: {
             q: city,
             appid: API_token,
@@ -58,7 +59,7 @@ const getWeather = async (city) => {
             units: 'metric'
         }
     })
-
+    
     return data
     // const url = new URL(`https://api.openweathermap.org/data/2.5/weather?`)
     // url.searchParams.append('appid', API_token)

@@ -38,6 +38,8 @@ const initCLI = async () => {
     }
 
     // Вывести погоду
+    
+    console.log(await getWeather('Старый Оскол'))
 
     const time_8 = [18, 10, 12, 16, 20, 6, 7, 14, 5, 4].reduce((a, b) => a + b)
     const task_1 = [10, 12, 16, 20]
@@ -50,17 +52,33 @@ const initCLI = async () => {
         
         let percent = 0
         if(completeSum !== 0)
-            percent = (100 * taskSum / completeSum)
+            percent = completeSum / taskSum
 
         percent += '%'
         const count = ` ${completeSum}/${taskSum}` 
         return  count + ' ' +  percent
         
     }
-    const task_2 = [6, 7, 14, 5, 4] 
-    const complete_2 = []
 
+    const task_2 = [6, 7, 14, 5, 4] 
+    const complete_2 = [6]
     console.log(calcPercent(task_2, complete_2))
+    
+    // let obj = Object(process.env)
+    // console.log(Object.entries(obj))
+    // let i = 0
+    // for (const [key, val] of Object.entries(obj)) {
+        
+    //     if(key.match(/[Tt][Ee][Rr]/g)){
+    //         console.log(key, val)
+    //     }
+            
+    // }
+    // console.log(i)
+    
+   
+
+    
     // console.log(complete.reduce((a, b) => a + b) / [10, 12, 16, 20].reduce((a, b) => a + b))
 
     // await getCity('Старый Оскол')
