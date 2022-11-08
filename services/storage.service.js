@@ -17,6 +17,7 @@ const TOKEN_DICTIONARY = {
 }
 
 
+const PATH_USER_DATA = join('./user_data.json') 
 
 const filePath = join(homedir(), '../weather-data.json') 
 /**
