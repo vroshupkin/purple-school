@@ -7,6 +7,31 @@ import axios from 'axios'
 const filePath = join(homedir(), '..', 'weather-data.json')
 
 
+const getIcon = (icnon) => {
+    switch(icnon.slice(0, -1)){
+        case '01':
+            return '☀️'
+        case '02':
+            return '🌤️'
+        case '03':
+            return '☁️'
+        case '04':
+            return '☁️'
+        case '09':
+            return '🌧️'
+        case '10':
+            return '🌦️'
+        case '11':
+            return '🌩️'
+        case '13':
+            return '❄️'
+        case '50':
+            return '🌫️'
+        
+    }
+
+}
+
 const getCity = async (city_name) => {
     const token = await readToken()
 
@@ -87,5 +112,10 @@ const getWeather = async (city) => {
 }
 
 
+/* 
+    TODO: get sunrise and sunset 
+    TODO: получить ветер, распарсить ветер 
+    TODO: распарсить температура по ощущениям и дать рекомендации по одежде
+*/ 
 
-export { getWeather, getCity }
+export { getWeather, getCity, getIcon}

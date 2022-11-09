@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { getArgs } from "./helpers/args.js"; 
-import { getCity, getWeather } from "./services/api.service.js";
-import { printError, printHelp, printStackError, printSuccess } from "./services/log.service.js";
+import { getCity, getIcon, getWeather } from "./services/api.service.js";
+import { printError, printHelp, printStackError, printSuccess, printWeather } from "./services/log.service.js";
 import { getKeyValue, saveKeyValue } from "./services/storage.service.js";
 import chalk from "chalk";
 import path from 'node:path'
@@ -58,10 +58,12 @@ const saveToken = async (token) => {
 }
 
 const getForcast = async () => {
-    const city = await getKeyValue('city')
+    const city = process.env.CITY ?? await getKeyValue('city')
+
     let weather = null
     try{
         weather = await getWeather(city)
+        printWeather(weather)
         
     } catch(e) {
         const error_status = e?.response?.status
